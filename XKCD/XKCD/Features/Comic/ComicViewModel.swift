@@ -8,10 +8,14 @@
 import Foundation
 
 class ComicViewModel: ObservableObject {
-    @Published var comic: Comic? = nil
-    var comicId: Int? = nil
+    var comic: Comic? = nil
+    var comicId: Int?
     @Published var isLoading: Bool = true
-    @Published var errorMessage: String?
+    var errorMessage: String? = nil
+    
+    init(comicId: Int?) {
+        self.comicId = comicId
+    }
     
     @MainActor
     func loadData() {

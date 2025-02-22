@@ -9,7 +9,11 @@ import Foundation
 import SwiftUI
 
 struct ComicView: View {
-    @StateObject var viewModel = ComicViewModel()
+    @ObservedObject var viewModel: ComicViewModel
+    
+    init(comicId: Int?) {
+        self.viewModel = ComicViewModel(comicId: comicId)
+    }
     
     var body: some View {
         VStack {
@@ -42,7 +46,7 @@ struct ComicView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ComicView()
+        ComicView(comicId: 3)
     }
 }
 
