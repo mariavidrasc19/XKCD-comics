@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		24499C8B2D64F22C00429A00 /* XKCDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24499C8A2D64F22C00429A00 /* XKCDApp.swift */; };
-		24499C8D2D64F22C00429A00 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24499C8C2D64F22C00429A00 /* ContentView.swift */; };
 		24499C8F2D64F22C00429A00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24499C8E2D64F22C00429A00 /* Assets.xcassets */; };
 		24499C922D64F22C00429A00 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24499C912D64F22C00429A00 /* Preview Assets.xcassets */; };
 		24499C9C2D64F22C00429A00 /* XKCDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24499C9B2D64F22C00429A00 /* XKCDTests.swift */; };
 		24499CA62D64F22D00429A00 /* XKCDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24499CA52D64F22D00429A00 /* XKCDUITests.swift */; };
 		24499CA82D64F22D00429A00 /* XKCDUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24499CA72D64F22D00429A00 /* XKCDUITestsLaunchTests.swift */; };
+		24859D322D68BF7F0082D3E0 /* ComicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24859D312D68BF7F0082D3E0 /* ComicView.swift */; };
+		24859D342D68BF8E0082D3E0 /* ComicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24859D332D68BF8E0082D3E0 /* ComicViewModel.swift */; };
+		24859D372D68BFBF0082D3E0 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24859D362D68BFBF0082D3E0 /* Comic.swift */; };
+		24859D3D2D68C03A0082D3E0 /* XKCDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24859D3C2D68C03A0082D3E0 /* XKCDService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +39,6 @@
 /* Begin PBXFileReference section */
 		24499C872D64F22C00429A00 /* XKCD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XKCD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24499C8A2D64F22C00429A00 /* XKCDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDApp.swift; sourceTree = "<group>"; };
-		24499C8C2D64F22C00429A00 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		24499C8E2D64F22C00429A00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24499C912D64F22C00429A00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		24499C972D64F22C00429A00 /* XKCDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XKCDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +46,10 @@
 		24499CA12D64F22D00429A00 /* XKCDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XKCDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		24499CA52D64F22D00429A00 /* XKCDUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDUITests.swift; sourceTree = "<group>"; };
 		24499CA72D64F22D00429A00 /* XKCDUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		24859D312D68BF7F0082D3E0 /* ComicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicView.swift; sourceTree = "<group>"; };
+		24859D332D68BF8E0082D3E0 /* ComicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicViewModel.swift; sourceTree = "<group>"; };
+		24859D362D68BFBF0082D3E0 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		24859D3C2D68C03A0082D3E0 /* XKCDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,20 +100,14 @@
 		24499C892D64F22C00429A00 /* XKCD */ = {
 			isa = PBXGroup;
 			children = (
+				24859D3A2D68BFF00082D3E0 /* Resources */,
+				24859D352D68BFB10082D3E0 /* Models */,
+				24859D2E2D68BEC30082D3E0 /* Utils */,
+				24859D2D2D68BEB00082D3E0 /* Services */,
+				24859D2C2D68BE600082D3E0 /* Features */,
 				24499C8A2D64F22C00429A00 /* XKCDApp.swift */,
-				24499C8C2D64F22C00429A00 /* ContentView.swift */,
-				24499C8E2D64F22C00429A00 /* Assets.xcassets */,
-				24499C902D64F22C00429A00 /* Preview Content */,
 			);
 			path = XKCD;
-			sourceTree = "<group>";
-		};
-		24499C902D64F22C00429A00 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				24499C912D64F22C00429A00 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		24499C9A2D64F22C00429A00 /* XKCDTests */ = {
@@ -125,6 +125,55 @@
 				24499CA72D64F22D00429A00 /* XKCDUITestsLaunchTests.swift */,
 			);
 			path = XKCDUITests;
+			sourceTree = "<group>";
+		};
+		24859D2C2D68BE600082D3E0 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				24859D2F2D68BF620082D3E0 /* Comic */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		24859D2D2D68BEB00082D3E0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				24859D3C2D68C03A0082D3E0 /* XKCDService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		24859D2E2D68BEC30082D3E0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		24859D2F2D68BF620082D3E0 /* Comic */ = {
+			isa = PBXGroup;
+			children = (
+				24859D312D68BF7F0082D3E0 /* ComicView.swift */,
+				24859D332D68BF8E0082D3E0 /* ComicViewModel.swift */,
+			);
+			path = Comic;
+			sourceTree = "<group>";
+		};
+		24859D352D68BFB10082D3E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24859D362D68BFBF0082D3E0 /* Comic.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		24859D3A2D68BFF00082D3E0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				24499C8E2D64F22C00429A00 /* Assets.xcassets */,
+				24499C912D64F22C00429A00 /* Preview Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +306,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24499C8D2D64F22C00429A00 /* ContentView.swift in Sources */,
+				24859D322D68BF7F0082D3E0 /* ComicView.swift in Sources */,
+				24859D372D68BFBF0082D3E0 /* Comic.swift in Sources */,
+				24859D342D68BF8E0082D3E0 /* ComicViewModel.swift in Sources */,
+				24859D3D2D68C03A0082D3E0 /* XKCDService.swift in Sources */,
 				24499C8B2D64F22C00429A00 /* XKCDApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,7 +473,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"XKCD/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9A7AC828HW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -450,7 +502,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"XKCD/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 9A7AC828HW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
