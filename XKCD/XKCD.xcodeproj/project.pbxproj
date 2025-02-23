@@ -19,6 +19,7 @@
 		24859D3D2D68C03A0082D3E0 /* XKCDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24859D3C2D68C03A0082D3E0 /* XKCDService.swift */; };
 		24926D692D6A0848004482A5 /* ComicsNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D682D6A0848004482A5 /* ComicsNavigationView.swift */; };
 		24926D6B2D6A085A004482A5 /* ComicsScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D6A2D6A085A004482A5 /* ComicsScrollViewModel.swift */; };
+		24926D702D6B92DF004482A5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D6F2D6B92DF004482A5 /* StorageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		24859D3C2D68C03A0082D3E0 /* XKCDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDService.swift; sourceTree = "<group>"; };
 		24926D682D6A0848004482A5 /* ComicsNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsNavigationView.swift; sourceTree = "<group>"; };
 		24926D6A2D6A085A004482A5 /* ComicsScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsScrollViewModel.swift; sourceTree = "<group>"; };
+		24926D6F2D6B92DF004482A5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				24859D3C2D68C03A0082D3E0 /* XKCDService.swift */,
+				24926D6F2D6B92DF004482A5 /* StorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				24926D6B2D6A085A004482A5 /* ComicsScrollViewModel.swift in Sources */,
 				24859D342D68BF8E0082D3E0 /* ComicViewModel.swift in Sources */,
 				24859D3D2D68C03A0082D3E0 /* XKCDService.swift in Sources */,
+				24926D702D6B92DF004482A5 /* StorageService.swift in Sources */,
 				24926D692D6A0848004482A5 /* ComicsNavigationView.swift in Sources */,
 				24499C8B2D64F22C00429A00 /* XKCDApp.swift in Sources */,
 			);

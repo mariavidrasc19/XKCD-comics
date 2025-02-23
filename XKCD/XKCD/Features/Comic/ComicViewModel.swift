@@ -8,25 +8,23 @@
 import Foundation
 
 class ComicViewModel: ObservableObject {
-    var comic: Comic? = nil
-    var comicId: Int?
-    @Published var isLoading: Bool = true
-    var errorMessage: String? = nil
+    var comic: Comic
+    @Published var isLiked: Bool
     
-    init(comicId: Int?) {
-        self.comicId = comicId
+    // save favorites
+    private let storageService: StorageServiceProtocol = StorageService()
+    
+    init(comic: Comic) {
+        self.comic = comic
+        self.isLiked = storageService.contains(comicId: comic.num)
     }
-    
-    @MainActor
-    func loadData() {
-        XKCDService.shared.fetchComics(id: comicId) { result in
-            self.isLoading = false
-            switch result {
-            case .success(let comic):
-                self.comic = comic
-            case .failure(let error):
-                self.errorMessage = error.localizedDescription
-            }
+
+    func isLikeTapped() {
+        if isLiked {
+            storageService.delete(comicId: comic.num)
+        } else {
+            storageService.save(comic: comic)
         }
+        isLiked.toggle()
     }
 }

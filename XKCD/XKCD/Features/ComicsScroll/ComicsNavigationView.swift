@@ -16,17 +16,35 @@ struct ComicsNavigationView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.fixed(1))], spacing: 16) {
                     ForEach(viewModel.comics.indices, id: \.self) { index in
-                        NavigationLink(destination: ComicView(comicId: viewModel.comics[index].num)) {
-                            AsyncImage(url: URL(string: viewModel.comics[index].img)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                            } placeholder: {
-                                ProgressView()
+                        NavigationLink(destination: ComicView(comic: viewModel.comics[index])) {
+                            VStack {
+                                AsyncImage(url: URL(string: viewModel.comics[index].img)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
+                                HStack {
+                                    Spacer()
+                                    Button(action: {}) {
+                                        Image(systemName: viewModel.getImage(for: viewModel.comics[index].num))
+                                    }
+                                    ShareLink(
+                                        item: viewModel.comics[index].link,
+                                        message: Text("Check out this XKCD comic: \(viewModel.comics[index].title)")
+                                    ) {
+                                        Image(systemName: "square.and.arrow.up")
+                                    }
+                                    .padding()
+                                }
                             }
-                            .frame(width: UIScreen.main.bounds.width,
-                                   height: 400)
-                            .cornerRadius(8)
+                            .overlay( /// apply a rounded border
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(.black, lineWidth: 2.5)
+                            )
+                            .frame(width: UIScreen.main.bounds.width - 30)
                         }
                         .onAppear {
                             // Fetch more comics when the user reaches the end of the comics list

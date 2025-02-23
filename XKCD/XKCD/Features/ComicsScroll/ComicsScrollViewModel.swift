@@ -14,11 +14,15 @@ class ComicsScrollViewModel: ObservableObject {
     // Store the comics
     @Published var comics: [Comic] = []
     
+    // save favorites
+    let storageService: StorageServiceProtocol = StorageService()
+    
     @MainActor
     func setID() {
         fetchComic(by: nil)
     }
     
+    @MainActor 
     func fetchID() {
         currentID = (currentID ?? 0) - 1
         
@@ -26,6 +30,7 @@ class ComicsScrollViewModel: ObservableObject {
         fetchComic(by: currentID)
     }
 
+    @MainActor
     private func fetchComic(by id: Int?) {
         XKCDService.shared.fetchComics(id: id) { result in
             switch result {
@@ -38,6 +43,10 @@ class ComicsScrollViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
             }
         }
+    }
+    
+    func getImage(for comicId: Int) -> String {
+        storageService.contains(comicId: comicId) ? "heart.fill" : "heart"
     }
 }
 
