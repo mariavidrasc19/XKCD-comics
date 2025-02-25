@@ -20,6 +20,9 @@
 		24926D692D6A0848004482A5 /* ComicsNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D682D6A0848004482A5 /* ComicsNavigationView.swift */; };
 		24926D6B2D6A085A004482A5 /* ComicsScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D6A2D6A085A004482A5 /* ComicsScrollViewModel.swift */; };
 		24926D702D6B92DF004482A5 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D6F2D6B92DF004482A5 /* StorageService.swift */; };
+		24926D722D6E1DF1004482A5 /* ServiceComic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D712D6E1DF1004482A5 /* ServiceComic.swift */; };
+		24926D742D6E3B4D004482A5 /* XKCDSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24926D732D6E3B4D004482A5 /* XKCDSearchService.swift */; };
+		24926D772D6E3C0C004482A5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 24926D762D6E3C0C004482A5 /* SwiftSoup */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,8 @@
 		24926D682D6A0848004482A5 /* ComicsNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsNavigationView.swift; sourceTree = "<group>"; };
 		24926D6A2D6A085A004482A5 /* ComicsScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsScrollViewModel.swift; sourceTree = "<group>"; };
 		24926D6F2D6B92DF004482A5 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		24926D712D6E1DF1004482A5 /* ServiceComic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComic.swift; sourceTree = "<group>"; };
+		24926D732D6E3B4D004482A5 /* XKCDSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDSearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24926D772D6E3C0C004482A5 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +153,7 @@
 			children = (
 				24859D3C2D68C03A0082D3E0 /* XKCDService.swift */,
 				24926D6F2D6B92DF004482A5 /* StorageService.swift */,
+				24926D732D6E3B4D004482A5 /* XKCDSearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -171,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				24859D362D68BFBF0082D3E0 /* Comic.swift */,
+				24926D712D6E1DF1004482A5 /* ServiceComic.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -209,6 +217,9 @@
 			dependencies = (
 			);
 			name = XKCD;
+			packageProductDependencies = (
+				24926D762D6E3C0C004482A5 /* SwiftSoup */,
+			);
 			productName = XKCD;
 			productReference = 24499C872D64F22C00429A00 /* XKCD.app */;
 			productType = "com.apple.product-type.application";
@@ -281,6 +292,9 @@
 				Base,
 			);
 			mainGroup = 24499C7E2D64F22B00429A00;
+			packageReferences = (
+				24926D752D6E3C0C004482A5 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = 24499C882D64F22C00429A00 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -324,6 +338,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				24859D322D68BF7F0082D3E0 /* ComicView.swift in Sources */,
+				24926D742D6E3B4D004482A5 /* XKCDSearchService.swift in Sources */,
+				24926D722D6E1DF1004482A5 /* ServiceComic.swift in Sources */,
 				24859D372D68BFBF0082D3E0 /* Comic.swift in Sources */,
 				24926D6B2D6A085A004482A5 /* ComicsScrollViewModel.swift in Sources */,
 				24859D342D68BF8E0082D3E0 /* ComicViewModel.swift in Sources */,
@@ -660,6 +676,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		24926D752D6E3C0C004482A5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24926D762D6E3C0C004482A5 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24926D752D6E3C0C004482A5 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 24499C7F2D64F22B00429A00 /* Project object */;
 }

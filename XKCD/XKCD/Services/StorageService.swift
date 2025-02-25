@@ -14,7 +14,7 @@ protocol StorageServiceProtocol {
     func delete(comicId: Int)
 }
 
-class StorageService: StorageServiceProtocol {
+final class StorageService: StorageServiceProtocol {
     private let userDefaultsComicsKey = "favoriteComics"
     
     func save(comic: Comic) {

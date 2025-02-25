@@ -20,15 +20,18 @@ struct ComicView: View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    AsyncImage(url: URL(string: viewModel.comic.img)) { image in
-                        image
+                    if let image = viewModel.comic.image {
+                        Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                    } placeholder: {
-                        ProgressView()
+                            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
+                    } else {
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
+                            .foregroundColor(.gray)
                     }
-                    .cornerRadius(12)
-                    .shadow(radius: 8)
 
                     Text(viewModel.comic.title)
                         .font(.largeTitle)
