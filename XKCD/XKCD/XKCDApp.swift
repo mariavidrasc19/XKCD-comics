@@ -14,7 +14,11 @@ struct XKCDApp: App {
         WindowGroup {
             ComicsNavigationView()
                 .onAppear {
-                    NotificationManager.shared.requestNotificationPermission()
+                    UNUserNotificationCenter.current().getNotificationSettings { settings in
+                        if settings.authorizationStatus == .notDetermined {
+                            NotificationManager.shared.requestNotificationPermission()
+                        }
+                    }
                 }
         }
     }

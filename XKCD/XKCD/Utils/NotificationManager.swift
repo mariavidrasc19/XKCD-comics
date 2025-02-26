@@ -14,8 +14,7 @@ final class NotificationManager {
     private init() {}
 
     func requestNotificationPermission() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
                 self.scheduleNotificationEveryOneHour()
                 print("Permisiune pentru notificări acordată.")
@@ -26,8 +25,6 @@ final class NotificationManager {
     }
 
     func scheduleNotification(for comic: Comic) {
-        let center = UNUserNotificationCenter.current()
-
         let content = UNMutableNotificationContent()
         content.title = "Check XKCD app!"
         content.body = "\(comic.title) is now and fresh! Check it out!"
@@ -37,7 +34,7 @@ final class NotificationManager {
 
         let request = UNNotificationRequest(identifier: "newComic_\(comic.id)", content: content, trigger: trigger)
 
-        center.add(request) { error in
+        UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print(error.localizedDescription)
             }
@@ -45,9 +42,6 @@ final class NotificationManager {
     }
     
     func scheduleNotificationEveryOneHour() {
-        let center = UNUserNotificationCenter.current()
-        
-        // Conținutul notificării
         let content = UNMutableNotificationContent()
         content.title = "Check XKCD app!"
         content.body = "A now comic may accure!"
@@ -58,7 +52,7 @@ final class NotificationManager {
         
         let request = UNNotificationRequest(identifier: "everyoneHour", content: content, trigger: trigger)
         
-        center.add(request) { error in
+        UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print(error.localizedDescription)
             }
