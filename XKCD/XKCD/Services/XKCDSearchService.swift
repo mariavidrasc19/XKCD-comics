@@ -40,6 +40,7 @@ final class XKCDSearchService {
         // extract the elements with a tag that contain the ids of result comics
         let searchResults = try document.select("ul.mw-search-results li")        
         var comicIds: [Int] = []
+        var uniqueIds: Set<Int> = []
         
         for result in searchResults {
             // extract the link that contains comic id
@@ -53,7 +54,10 @@ final class XKCDSearchService {
             if let match = regex?.firstMatch(in: link, range: NSRange(link.startIndex..., in: link)),
                let range = Range(match.range(at: 1), in: link),
                let comicId = Int(link[range]) {
-                comicIds.append(comicId)
+                if !uniqueIds.contains(comicId) {
+                    comicIds.append(comicId)
+                    uniqueIds.insert(comicId)
+                }
             }
         }
         
