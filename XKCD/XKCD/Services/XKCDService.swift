@@ -22,7 +22,7 @@ final class XKCDService {
             guard let imageURL = URL(string: comic.img) else { throw URLError(.badURL) }
             let (imageData, _) = try await URLSession.shared.data(from: imageURL)
             
-            return Comic(num: comic.num,
+            return Comic(id: comic.num,
                          link: comic.link,
                          day: comic.day,
                          month: comic.month,

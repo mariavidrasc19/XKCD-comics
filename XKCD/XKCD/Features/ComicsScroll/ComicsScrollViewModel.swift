@@ -7,11 +7,15 @@
 
 import Foundation
 
+
+// structure that stores the state of the screen
 enum ComicsScrollViewState {
-    case idle // Starea inițială, înainte de a începe încărcarea
-    case loading // Încărcare în curs
-    case loaded([Comic]) // Încărcare finalizată cu succes
-    case error(String) // Eroare cu un mesaj
+    case idle
+    case loading
+    case loaded([Comic])
+    case searchResults([Comic])
+    case favorites([Comic])
+    case error(String)
 }
 
 @MainActor
@@ -19,15 +23,11 @@ class ComicsScrollViewModel: ObservableObject {
     // Store the comics
     @Published var state: ComicsScrollViewState = .idle
     @Published var searchResults: [Int] = []
-    @Published var searchComics: [Comic] = []
     
     // Track the current ID that we use for adding new comics in the list
     var currentID: Int? = nil
     
     private var searchTask: Task<Void, Never>?
-    
-    // save favorites
-    let storageService: StorageServiceProtocol = StorageService()
     
     private func updateState(_ newState: ComicsScrollViewState) async {
         await MainActor.run {
@@ -37,15 +37,31 @@ class ComicsScrollViewModel: ObservableObject {
     
     func loadData() async throws {
         await updateState(.loading)
-        try await fetchComic(by: nil)
+        let comic = try await fetchComic(by: nil)
+        self.currentID = comic.id
+        await updateState(.loaded([comic]))
     }
 
     func fetchNextComic() async throws {
         currentID = (currentID ?? 0) - 1
-        try await fetchComic(by: currentID)
+        let comic = try await fetchComic(by: currentID)
+        if case .loaded(var comics) = state {
+            comics.append(comic)
+            await updateState(.loaded(comics))
+        }
+    }
+    
+    func getFavorites() async {
+        await updateState(.loading)
+        let comics = StorageService.shared.getComics()
+        await updateState(.favorites(comics))
+    }
+    
+    func getBrowsing() async throws {
+        await updateState(.loading)
+        try await loadData()
     }
 
-    
     func searchComics(query: String) async {
         searchTask?.cancel()
         
@@ -54,12 +70,6 @@ class ComicsScrollViewModel: ObservableObject {
             do {
                 let comicIds = try await XKCDSearchService.shared.searchComics(query: query)
                 if !Task.isCancelled {
-                    await MainActor.run {
-                        self.searchResults = comicIds
-                        self.searchComics = []
-                        self.state = .loaded([])
-                    }
-
                     // add founded comics
                     await withTaskGroup(of: Void.self) { group in
                         // keep track of the groups that are busy
@@ -75,7 +85,13 @@ class ComicsScrollViewModel: ObservableObject {
                             // 'charging' the group with tasks
                             group.addTask {
                                 do {
-                                    try await self.fetchComic(by: comicId, isSearchResult: true)
+                                    let comic = try await self.fetchComic(by: comicId, isSearchResult: true)
+                                    if case .searchResults(var comics) = await self.state {
+                                        comics.append(comic)
+                                        await self.updateState(.searchResults(comics))
+                                    } else {
+                                        await self.updateState(.searchResults([comic]))
+                                    }
                                 } catch {
                                     print("Error loading comic \(comicId): \(error)")
                                 }
@@ -90,28 +106,21 @@ class ComicsScrollViewModel: ObservableObject {
         }
     }
 
-    func fetchComic(by id: Int?, isSearchResult: Bool = false) async throws {
+    func fetchComic(by id: Int?, isSearchResult: Bool = false) async throws -> Comic {
         let comic = try await XKCDService.shared.fetchComics(id: id)
-        if self.currentID == nil {
-            self.currentID = comic.num
-        }
-
-        if isSearchResult {
-            await MainActor.run {
-                self.searchComics.append(comic)
-            }
+        return comic
+    }
+    
+    func toggleFavorite(for comic: Comic) async {
+        if StorageService.shared.contains(comicId: comic.id) {
+            StorageService.shared.delete(comicId: comic.id)
         } else {
-            if case .loaded(var comics) = state {
-                comics.append(comic)
-                await updateState(.loaded(comics))
-            } else {
-                await updateState(.loaded([comic]))
-            }
+            StorageService.shared.save(comic: comic)
         }
     }
     
     func getImage(for comicId: Int) -> String {
-        storageService.contains(comicId: comicId) ? "heart.fill" : "heart"
+        StorageService.shared.contains(comicId: comicId) ? "heart.fill" : "heart"
     }
 }
 

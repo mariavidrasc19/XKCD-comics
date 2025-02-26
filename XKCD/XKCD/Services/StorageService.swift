@@ -15,6 +15,7 @@ protocol StorageServiceProtocol {
 }
 
 final class StorageService: StorageServiceProtocol {
+    static let shared = StorageService()
     private let userDefaultsComicsKey = "favoriteComics"
     
     func save(comic: Comic) {
@@ -35,14 +36,14 @@ final class StorageService: StorageServiceProtocol {
     
     func contains(comicId: Int) -> Bool {
         let comicsList = getComics()
-        if comicsList.contains(where: { comic in comic.num == comicId}) {
+        if comicsList.contains(where: { comic in comic.id == comicId}) {
             return true
         }
         return false
     }
     
     func delete(comicId: Int) {
-        let newComicsList = getComics().filter({ comic in comic.num != comicId})
+        let newComicsList = getComics().filter({ comic in comic.id != comicId})
         if let encodedData = try? JSONEncoder().encode(newComicsList) {
                 UserDefaults.standard.set(encodedData, forKey: userDefaultsComicsKey)
         }

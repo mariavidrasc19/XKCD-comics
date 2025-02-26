@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct Comic: Codable {
-    var num: Int
+    var id: Int
     var link: String
     var day: String
     var month: String
@@ -31,7 +31,9 @@ struct Comic: Codable {
         return nil
     }
     
-    init(num: Int,
+    var isFavorite: Bool
+    
+    init(id: Int,
          link: String,
          day: String,
          month: String,
@@ -43,7 +45,7 @@ struct Comic: Codable {
          title: String,
          imageData: Data?) {
             self.month = month
-            self.num = num
+            self.id = id
             self.link = link
             self.year = year
             self.news = news
@@ -53,20 +55,6 @@ struct Comic: Codable {
             self.title = title
             self.day = day
             self.imageData = imageData
+            self.isFavorite = StorageService.shared.contains(comicId: id)
         }
-    
-//    init(from serviceComic: ServiceComic) throws {
-//        let (imageData, _) = try await URLSession.shared.data(from: serviceComic.img)
-//        self.init(num: serviceComic.num,
-//                  link: serviceComic.link,
-//                  day: serviceComic.day,
-//                  month: serviceComic.month,
-//                  year: serviceComic.year,
-//                  news: serviceComic.news,
-//                  safeTitle: serviceComic.safe_title,
-//                  transcript: serviceComic.transcript,
-//                  alt: serviceComic.alt,
-//                  title: serviceComic.title,
-//                  imageData: imageData)
-//    }
 }

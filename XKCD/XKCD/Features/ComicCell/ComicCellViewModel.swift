@@ -1,13 +1,13 @@
 //
-//  ComicViewModel.swift
+//  ComicCellViewModel.swift
 //  XKCD
 //
-//  Created by Maria Vidrasc on 21.02.2025.
+//  Created by Maria Vidrasc on 26.02.2025.
 //
 
 import Foundation
 
-class ComicViewModel: ObservableObject {
+class ComicCellViewModel: ObservableObject {
     var comic: Comic
     @Published var isLiked: Bool
     
@@ -16,15 +16,16 @@ class ComicViewModel: ObservableObject {
     
     init(comic: Comic) {
         self.comic = comic
-        self.isLiked = storageService.contains(comicId: comic.num)
+        self.isLiked = storageService.contains(comicId: comic.id)
     }
 
     func isLikeTapped() {
         if isLiked {
-            storageService.delete(comicId: comic.num)
+            storageService.delete(comicId: comic.id)
         } else {
             storageService.save(comic: comic)
         }
         isLiked.toggle()
     }
 }
+

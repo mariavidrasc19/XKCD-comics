@@ -1,19 +1,19 @@
 //
-//  ComicsView.swift
+//  ComicDetailView.swift
 //  XKCD
 //
-//  Created by Maria Vidrasc on 21.02.2025.
+//  Created by Maria Vidrasc on 26.02.2025.
 //
 
 import Foundation
 import SwiftUI
 
-struct ComicView: View {
-    @ObservedObject var viewModel: ComicViewModel
+struct ComicDetailView: View {
+    @ObservedObject var viewModel: ComicDetailViewModel
     @Environment(\.presentationMode) private var presentationMode
     
     init(comic: Comic) {
-        self.viewModel = ComicViewModel(comic: comic)
+        self.viewModel = ComicDetailViewModel(comic: comic)
     }
     
     var body: some View {
@@ -60,7 +60,7 @@ struct ComicView: View {
                     }
 
                     Button(action: {
-                        if let url = URL(string: "https://www.explainxkcd.com/wiki/index.php/\(viewModel.comic.num)") {
+                        if let url = URL(string: "https://www.explainxkcd.com/wiki/index.php/\(viewModel.comic.id)") {
                             UIApplication.shared.open(url)
                         }
                     }) {
@@ -78,20 +78,19 @@ struct ComicView: View {
                 .padding()
             }
             .navigationBarTitle(Text(viewModel.comic.title), displayMode: .inline)
-            .navigationBarBackButtonHidden(true) // Hide the default back button
+            .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        // Toggle the value of the `isLiked` variable when the button is tapped
                         viewModel.isLikeTapped()
                     }) {
-                        // Use an image or label to indicate that the button is a "like" button
-                        Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
+                        Image(systemName: viewModel.getImage(comicId: viewModel.comic.id))
+                            .foregroundColor(.red)
                     }
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss() // Custom back action
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
                             Image(systemName: "chevron.left")
@@ -104,12 +103,3 @@ struct ComicView: View {
         }
     }
 }
-
-//{"month": "1", "num": 3, "link": "", "year": "2006", "news": "", "safe_title": "Island (sketch)", "transcript": "[[A sketch of an Island]]\n{{Alt:Hello, island}}", "alt": "Hello, island", "img": "https://imgs.xkcd.com/comics/island_color.jpg", "title": "Island (sketch)", "day": "1"}
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ComicView(comicId: 3)
-//    }
-//}
-

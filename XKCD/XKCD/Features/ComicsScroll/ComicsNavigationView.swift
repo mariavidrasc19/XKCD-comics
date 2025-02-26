@@ -19,8 +19,14 @@ struct ComicsNavigationView: View {
             }
             .searchable(text: $searchText, prompt: "Search comics")
             .onChange(of: searchText) {
-                Task {
-                    await viewModel.searchComics(query: searchText)
+                if searchText.isEmpty {
+                    Task {
+                        try await viewModel.loadData()
+                    }
+                } else {
+                    Task {
+                        await viewModel.searchComics(query: searchText)
+                    }
                 }
             }
             .onAppear {
@@ -29,6 +35,27 @@ struct ComicsNavigationView: View {
                 }
             }
             .navigationBarTitle(Text("XKCD Comics"))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        Task {
+                            await viewModel.getFavorites()
+                        }
+                    }) {
+                        Text("Favorites")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        Task {
+                            try await viewModel.getBrowsing()
+                        }
+                    }) {
+                        Text("Browse")
+                    }
+                }
+            }
         }
     }
 }
@@ -42,67 +69,37 @@ extension ComicsNavigationView {
         case .loading:
             ProgressView().padding()
         case .loaded(let comics):
-            if viewModel.searchResults.isEmpty {
-                comicsView(comics: comics)
-            } else {
-                comicsView(comics: viewModel.searchComics)
-            }
+            comicsView(comics: comics)
+        case .searchResults(let comics):
+            comicsView(comics: comics)
+        case .favorites(let comics):
+            comicsView(comics: comics)
         case .error(let string):
             Text(string).foregroundStyle(.red)
         }
     }
     
     func comicsView(comics: [Comic]) -> some View {
-        LazyVGrid(columns: [GridItem(.fixed(1))], spacing: 16) {
-            ForEach(comics.indices, id: \.self) { index in
-                comicCellView(comic: comics[index])
-                    .onAppear {
-                        // Fetch more comics when the user reaches the end of the comics list
-                        if viewModel.searchResults.isEmpty,
-                           index == comics.count - 1 {
-                            Task {
-                                try await viewModel.fetchNextComic()
+        VStack {
+            LazyVGrid(columns: [GridItem(.fixed(1))], spacing: 16) {
+                ForEach(comics.indices, id: \.self) { index in
+                    comicCellView(comic: comics[index])
+                        .onAppear() {
+                            // Fetch more comics when the user reaches the end of the comics list
+                            if index == comics.count - 1 {
+                                Task {
+                                    try await viewModel.fetchNextComic()
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }
     
     func comicCellView(comic: Comic) -> some View {
-        NavigationLink(destination: ComicView(comic: comic)) {
-            VStack {
-                if let image = comic.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
-                } else {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
-                        .foregroundColor(.gray)
-                }
-                HStack {
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: viewModel.getImage(for: comic.num))
-                    }
-                    ShareLink(
-                        item: comic.link,
-                        message: Text("Check out this XKCD comic: \(comic.title)")
-                    ) {
-                        Image(systemName: "square.and.arrow.up")
-                    }
-                    .padding()
-                }
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(.black, lineWidth: 2.5)
-            )
-            .frame(width: UIScreen.main.bounds.width - 30)
+        NavigationLink(destination: ComicDetailView(comic: comic)) {
+            ComicCellView(comic: comic)
         }
     }
 }
