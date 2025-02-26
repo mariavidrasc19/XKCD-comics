@@ -70,6 +70,10 @@ class ComicsScrollViewModel: ObservableObject {
             do {
                 let comicIds = try await XKCDSearchService.shared.searchComics(query: query)
                 if !Task.isCancelled {
+                    if comicIds.isEmpty {
+                        await self.updateState(.error("No data found for query \(query)"))
+                        return
+                    }
                     // add founded comics
                     await withTaskGroup(of: Void.self) { group in
                         // keep track of the groups that are busy
@@ -93,7 +97,8 @@ class ComicsScrollViewModel: ObservableObject {
                                         await self.updateState(.searchResults([comic]))
                                     }
                                 } catch {
-                                    print("Error loading comic \(comicId): \(error)")
+                                    await self.updateState(.error("Error loading comic \(comicId): \(error)"))
+                                    
                                 }
                             }
                             activeTasks += 1

@@ -67,7 +67,8 @@ extension ComicsNavigationView {
         case .idle:
             EmptyView()
         case .loading:
-            ProgressView().padding()
+            ProgressView()
+                .padding()
         case .loaded(let comics):
             comicsView(comics: comics)
         case .searchResults(let comics):
@@ -75,7 +76,9 @@ extension ComicsNavigationView {
         case .favorites(let comics):
             comicsView(comics: comics)
         case .error(let string):
-            Text(string).foregroundStyle(.red)
+            Text(string)
+                .foregroundStyle(.red)
+                .padding()
         }
     }
     
