@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UserNotifications
 
 // structure that stores the state of the screen
 enum ComicsScrollViewState {
@@ -113,6 +113,11 @@ class ComicsScrollViewModel: ObservableObject {
 
     func fetchComic(by id: Int?, isSearchResult: Bool = false) async throws -> Comic {
         let comic = try await XKCDService.shared.fetchComics(id: id)
+        
+        // verify if a new comic has apeared
+        if let latestComicID = currentID, comic.id > latestComicID {
+            NotificationManager.shared.scheduleNotification(for: comic)
+        }
         return comic
     }
     
