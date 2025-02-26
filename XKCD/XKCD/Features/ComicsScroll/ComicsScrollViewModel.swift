@@ -18,6 +18,9 @@ enum ComicsScrollViewState {
 class ComicsScrollViewModel: ObservableObject {
     // Store the comics
     @Published var state: ComicsScrollViewState = .idle
+    @Published var searchResults: [Int] = []
+    @Published var searchComics: [Comic] = []
+    
     // Track the current ID that we use for adding new comics in the list
     var currentID: Int? = nil
     
@@ -32,14 +35,14 @@ class ComicsScrollViewModel: ObservableObject {
         }
     }
     
-    func loadData() async {
+    func loadData() async throws {
         await updateState(.loading)
-        await fetchComic(by: nil)
+        try await fetchComic(by: nil)
     }
 
-    func fetchNextComic() async {
+    func fetchNextComic() async throws {
         currentID = (currentID ?? 0) - 1
-        await fetchComic(by: currentID)
+        try await fetchComic(by: currentID)
     }
 
     
@@ -49,31 +52,61 @@ class ComicsScrollViewModel: ObservableObject {
         searchTask = Task {
             await updateState(.loading)
             do {
-                let comics = try await XKCDSearchService.shared.searchComics(query: "adam")
-                
-//                if !Task.isCancelled {
-                    await updateState(.loaded(comics))
-//                }
+                let comicIds = try await XKCDSearchService.shared.searchComics(query: query)
+                if !Task.isCancelled {
+                    await MainActor.run {
+                        self.searchResults = comicIds
+                        self.searchComics = []
+                        self.state = .loaded([])
+                    }
+
+                    // add founded comics
+                    await withTaskGroup(of: Void.self) { group in
+                        // keep track of the groups that are busy
+                        var activeTasks = 0
+                        
+                        for comicId in comicIds {
+                            if activeTasks >= 4 {
+                                await group.next()
+                                // after a group is finished make it available for the next tasks
+                                activeTasks -= 1
+                            }
+                            
+                            // 'charging' the group with tasks
+                            group.addTask {
+                                do {
+                                    try await self.fetchComic(by: comicId, isSearchResult: true)
+                                } catch {
+                                    print("Error loading comic \(comicId): \(error)")
+                                }
+                            }
+                            activeTasks += 1
+                        }
+                    }
+               }
             } catch {
                 await updateState(.error(error.localizedDescription))
             }
         }
     }
 
-    private func fetchComic(by id: Int?) async {
-        do {
-            let comic = try await XKCDService.shared.fetchComics(id: id)
-            if self.currentID == nil {
-                self.currentID = comic.num
+    func fetchComic(by id: Int?, isSearchResult: Bool = false) async throws {
+        let comic = try await XKCDService.shared.fetchComics(id: id)
+        if self.currentID == nil {
+            self.currentID = comic.num
+        }
+
+        if isSearchResult {
+            await MainActor.run {
+                self.searchComics.append(comic)
             }
+        } else {
             if case .loaded(var comics) = state {
                 comics.append(comic)
                 await updateState(.loaded(comics))
             } else {
                 await updateState(.loaded([comic]))
             }
-        } catch {
-            await updateState(.error(error.localizedDescription))
         }
     }
     
