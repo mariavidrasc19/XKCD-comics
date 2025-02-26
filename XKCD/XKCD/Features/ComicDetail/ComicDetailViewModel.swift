@@ -9,20 +9,23 @@ import Foundation
 
 class ComicDetailViewModel: ObservableObject {
     var comic: Comic
+    @Published var isLiked: Bool
     
     init(comic: Comic) {
         self.comic = comic
+        self.isLiked = StorageService.shared.contains(comicId: comic.id)
     }
 
     func isLikeTapped() {
-        if StorageService.shared.contains(comicId: comic.id) {
+        if self.isLiked {
             StorageService.shared.delete(comicId: comic.id)
         } else {
             StorageService.shared.save(comic: comic)
         }
+        self.isLiked.toggle()
     }
     
     func getImage(comicId: Int) -> String {
-        StorageService.shared.contains(comicId: comicId) ? "heart.fill" : "heart"
+        self.isLiked ? "heart.fill" : "heart"
     }
 }
