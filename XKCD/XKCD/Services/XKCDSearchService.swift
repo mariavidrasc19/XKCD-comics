@@ -34,7 +34,7 @@ final class XKCDSearchService {
         }
         
         // Parse HTML using SwiftSoup
-//        let safeHtml = try SwiftSoup.clean(htmlString, Whitelist.basic())!
+        //        let safeHtml = try SwiftSoup.clean(htmlString, Whitelist.basic())!
         let document = try SwiftSoup.parse(htmlString)
         
         // extract the elements with a tag that contain the ids of result comics

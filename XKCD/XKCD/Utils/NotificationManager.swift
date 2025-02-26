@@ -10,9 +10,9 @@ import UserNotifications
 
 final class NotificationManager {
     static let shared = NotificationManager()
-
+    
     private init() {}
-
+    
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -23,17 +23,17 @@ final class NotificationManager {
             }
         }
     }
-
+    
     func scheduleNotification(for comic: Comic) {
         let content = UNMutableNotificationContent()
         content.title = "Check XKCD app!"
         content.body = "\(comic.title) is now and fresh! Check it out!"
         content.sound = .default
-
+        
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-
+        
         let request = UNNotificationRequest(identifier: "newComic_\(comic.id)", content: content, trigger: trigger)
-
+        
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print(error.localizedDescription)

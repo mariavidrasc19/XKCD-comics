@@ -22,7 +22,7 @@ struct Comic: Codable {
     
     // keeping Data to manage encodation
     var imageData: Data?
-
+    
     // get UIImage from Data
     var image: UIImage? {
         if let imageData = imageData {
@@ -44,17 +44,17 @@ struct Comic: Codable {
          alt: String,
          title: String,
          imageData: Data?) {
-            self.month = month
-            self.id = id
-            self.link = link
-            self.year = year
-            self.news = news
-            self.safeTitle = safeTitle
-            self.transcript = transcript
-            self.alt = alt
-            self.title = title
-            self.day = day
-            self.imageData = imageData
-            self.isFavorite = StorageService.shared.contains(comicId: id)
-        }
+        self.month = month
+        self.id = id
+        self.link = link
+        self.year = year
+        self.news = news
+        self.safeTitle = safeTitle
+        self.transcript = transcript
+        self.alt = alt
+        self.title = title
+        self.day = day
+        self.imageData = imageData
+        self.isFavorite = StorageService.shared.contains(comicId: id)
+    }
 }

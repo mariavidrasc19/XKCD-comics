@@ -18,7 +18,7 @@ class ComicCellViewModel: ObservableObject {
         self.comic = comic
         self.isLiked = storageService.contains(comicId: comic.id)
     }
-
+    
     func isLikeTapped() {
         if isLiked {
             storageService.delete(comicId: comic.id)

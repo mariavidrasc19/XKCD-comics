@@ -45,7 +45,7 @@ final class StorageService: StorageServiceProtocol {
     func delete(comicId: Int) {
         let newComicsList = getComics().filter({ comic in comic.id != comicId})
         if let encodedData = try? JSONEncoder().encode(newComicsList) {
-                UserDefaults.standard.set(encodedData, forKey: userDefaultsComicsKey)
+            UserDefaults.standard.set(encodedData, forKey: userDefaultsComicsKey)
         }
     }
 }

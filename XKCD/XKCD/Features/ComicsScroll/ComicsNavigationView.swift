@@ -11,7 +11,7 @@ import SwiftUI
 struct ComicsNavigationView: View {
     @StateObject var viewModel = ComicsScrollViewModel()
     @State private var searchText = ""
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {

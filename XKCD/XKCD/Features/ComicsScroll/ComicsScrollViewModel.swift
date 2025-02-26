@@ -41,7 +41,7 @@ class ComicsScrollViewModel: ObservableObject {
         self.currentID = comic.id
         await updateState(.loaded([comic]))
     }
-
+    
     func fetchNextComic() async throws {
         currentID = (currentID ?? 0) - 1
         let comic = try await fetchComic(by: currentID)
@@ -61,7 +61,7 @@ class ComicsScrollViewModel: ObservableObject {
         await updateState(.loading)
         try await loadData()
     }
-
+    
     func searchComics(query: String) async {
         searchTask?.cancel()
         
@@ -104,13 +104,13 @@ class ComicsScrollViewModel: ObservableObject {
                             activeTasks += 1
                         }
                     }
-               }
+                }
             } catch {
                 await updateState(.error(error.localizedDescription))
             }
         }
     }
-
+    
     func fetchComic(by id: Int?, isSearchResult: Bool = false) async throws -> Comic {
         let comic = try await XKCDService.shared.fetchComics(id: id)
         

@@ -47,10 +47,10 @@ final class XKCDService {
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
-
+        
         // Face cererea HTTP
         let (data, _) = try await URLSession.shared.data(from: url)
-
+        
         // Parsează rezultatele (aici trebuie să implementezi logica de parsare)
         if let jsonString = String(data: data, encoding: .utf8) {
             print(jsonString)

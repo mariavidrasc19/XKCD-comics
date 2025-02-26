@@ -32,33 +32,33 @@ struct ComicDetailView: View {
                             .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                             .foregroundColor(.gray)
                     }
-
+                    
                     Text(viewModel.comic.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
-
+                    
                     Text("Published on \(viewModel.comic.month)/\(viewModel.comic.day)/\(viewModel.comic.year)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-
+                    
                     Text(viewModel.comic.alt)
                         .font(.body)
                         .foregroundColor(.primary)
                         .padding(.vertical, 8)
-
+                    
                     if !viewModel.comic.transcript.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Transcript")
                                 .font(.headline)
                                 .fontWeight(.bold)
-
+                            
                             Text(viewModel.comic.transcript)
                                 .font(.body)
                                 .foregroundColor(.primary)
                         }
                         .padding(.vertical, 8)
                     }
-
+                    
                     Button(action: {
                         if let url = URL(string: "https://www.explainxkcd.com/wiki/index.php/\(viewModel.comic.id)") {
                             UIApplication.shared.open(url)
@@ -72,7 +72,7 @@ struct ComicDetailView: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-
+                    
                     Spacer()
                 }
                 .padding()
