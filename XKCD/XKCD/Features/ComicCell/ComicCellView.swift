@@ -38,14 +38,18 @@ struct ComicCellView: View {
                     Image(systemName: viewModel.isLiked ? "heart.fill" : "heart")
                         .foregroundColor(.red)
                 }
-                ShareLink(
-                    item: viewModel.comic.link,
-                    message: Text("Check out this XKCD comic: \(viewModel.comic.title)")
-                ) {
-                    Image(systemName: "square.and.arrow.up")
+                if let image = viewModel.comic.image {
+                    ShareLink(
+                        item: Image(uiImage: image),
+                        preview: SharePreview(
+                            "XKCD Comic Image",
+                            image: Image(uiImage: image)
+                        )
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
-                .padding()
-            }
+            }.padding()
         }
         .overlay(
             RoundedRectangle(cornerRadius: 15)

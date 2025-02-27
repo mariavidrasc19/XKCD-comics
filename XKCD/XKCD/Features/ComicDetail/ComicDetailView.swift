@@ -81,12 +81,26 @@ struct ComicDetailView: View {
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        viewModel.isLikeTapped()
-                    }) {
-                        Image(systemName: viewModel.getImage(comicId: viewModel.comic.id))
-                            .foregroundColor(.red)
-                    }
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            viewModel.isLikeTapped()
+                        }) {
+                            Image(systemName: viewModel.getImage(comicId: viewModel.comic.id))
+                                .foregroundColor(.red)
+                        }
+                        if let image = viewModel.comic.image {
+                            ShareLink(
+                                item: Image(uiImage: image),
+                                preview: SharePreview(
+                                    "XKCD Comic Image",
+                                    image: Image(uiImage: image)
+                                )
+                            ) {
+                                Image(systemName: "square.and.arrow.up")
+                            }
+                        }
+                    }.padding()
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
