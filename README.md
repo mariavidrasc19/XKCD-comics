@@ -55,11 +55,11 @@ The app follows the **MVVM (Model-View-ViewModel)** architecture for a clean and
 
 ### 3. **ViewModel**:
     *_ComicsNavigationViewModel_*:
-        - Manages the state of the comic list, including loading, searching, and favoriting.
-        - Loads the comics lists depending on the state of the screen.
-        
+    - Manages the state of the comic list, including loading, searching, and favoriting.
+    - Loads the comics lists depending on the state of the screen.
+
     *_ComicDetailViewModel_* and *_ComicCellViewModel_*:
-        - Handles logic for displaying comic details and explanations.
+    - Handles logic for displaying comic details and explanations.
 
 ### 4. **Services**:
     *_XKCDService_*:
