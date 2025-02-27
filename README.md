@@ -39,35 +39,35 @@ Hello! This is the Readme of my app. I will walk you through the functionalities
 The app follows the **MVVM (Model-View-ViewModel)** architecture for a clean and maintainable codebase.
 
 ### 1. **Model**:
-   - `Comic`: Represents a comic with properties like `id`, `title`, `image`, `description`, etc.
+   *Comic*: Represents a comic with properties like `id`, `title`, `image`, `description`, etc.
 
 ### 2. **View**:
-   `ComicsNavigationView`:
-        - The main view for browsing comics.
-        - Allows users to search for comics by number or text.
-        - Displays favorited comics.
-   `ComicDetailView`:
-        - Displays comic details, including the image and description.
-   `ComicCellView`:
-        - Displays some informations about the comic for the `ComicsNavigationView`.
+   *ComicsNavigationView*:
+   - The main view for browsing comics.
+   - Allows users to search for comics by number or text.
+   - Displays favorited comics.
+   *ComicDetailView*:
+   - Displays comic details, including the image and description.
+   *ComicCellView*:
+   - Displays some informations about the comic for the `ComicsNavigationView`.
 
 ### 3. **ViewModel**:
-    `ComicsNavigationViewModel`:
+    *ComicsNavigationViewModel*:
         - Manages the state of the comic list, including loading, searching, and favoriting.
         - Loads the comics lists depending on the state of the screen.
-    `ComicDetailViewModel` and `ComicCellViewModel`:
+    *ComicDetailViewModel* and *ComicCellViewModel*:
         - Handles logic for displaying comic details and explanations.
 
 ### 4. **Services**:
-    `XKCDService`:
+    *XKCDService*:
     - Fetches comics and explanations from the XKCD API.
-    `StorageService`:
+    *StorageService*:
     - Manages local storage for favorited comics using `UserDefaults`.
-    `XKCDSearchService`:
+    *XKCDSearchService*:
     - Fetch a HTML wiki page and parse it using *SwiftSoap* to get the comics ids.
    
 ### 4. **Utils**:
-    `NotificationManager`:
+    *NotificationManager*:
     - Handles local notifications for new comics.
     
 Classes in `Servicies` and `Utils` are marked as final and implement the *Singleton pattern*. This ensures a single, shared instance is used throughout the app, improving efficiency and consistency.
