@@ -15,44 +15,60 @@ struct ComicsNavigationView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                contentView
-            }
-            .searchable(text: $searchText, prompt: "Search comics")
-            .onChange(of: searchText) {
-                if searchText.isEmpty {
+                VStack(spacing: 16) {
+                    // Search Bar
+                    TextField("Search comics", text: $searchText)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .padding(.horizontal)
+                    
+                    // Browse and Favorites Buttons
+                    HStack(spacing: 16) {
+                        Button(action: {
+                            Task {
+                                try await viewModel.getBrowsing()
+                            }
+                        }) {
+                            Text("Browse")
+                                .frame(maxWidth: .infinity)
+                                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                                .background(Color.gray)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                        
+                        Button(action: {
+                            Task {
+                                await viewModel.getFavorites()
+                            }
+                        }) {
+                            Text("Favorites")
+                                .frame(maxWidth: .infinity)
+                                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                                .background(Color.red)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    // Content View
+                    contentView
+                }
+                .navigationBarTitle(Text("XKCD Comics"))
+                .onChange(of: searchText) {
+                    if searchText.isEmpty {
+                        Task {
+                            try await viewModel.loadData()
+                        }
+                    } else {
+                        Task {
+                            await viewModel.searchComics(query: searchText)
+                        }
+                    }
+                }
+                .onAppear {
                     Task {
                         try await viewModel.loadData()
-                    }
-                } else {
-                    Task {
-                        await viewModel.searchComics(query: searchText)
-                    }
-                }
-            }
-            .onAppear {
-                Task {
-                    try await viewModel.loadData()
-                }
-            }
-            .navigationBarTitle(Text("XKCD Comics"))
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        Task {
-                            await viewModel.getFavorites()
-                        }
-                    }) {
-                        Text("Favorites")
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        Task {
-                            try await viewModel.getBrowsing()
-                        }
-                    }) {
-                        Text("Browse")
                     }
                 }
             }

@@ -20,6 +20,10 @@ struct ComicDetailView: View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    Text(String(viewModel.comic.id) + ". " + viewModel.comic.title)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
                     if let image = viewModel.comic.image {
                         Image(uiImage: image)
                             .resizable()
@@ -32,10 +36,6 @@ struct ComicDetailView: View {
                             .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                             .foregroundColor(.gray)
                     }
-                    
-                    Text(viewModel.comic.title)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
                     
                     Text("Published on \(viewModel.comic.month)/\(viewModel.comic.day)/\(viewModel.comic.year)")
                         .font(.subheadline)
@@ -68,7 +68,7 @@ struct ComicDetailView: View {
                             .font(.headline)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.blue)
+                            .background(Color.gray)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }

@@ -42,39 +42,39 @@ The app follows the **MVVM (Model-View-ViewModel)** architecture for a clean and
    *_Comic_*: Represents a comic with properties like `id`, `title`, `image`, `description`, etc.
 
 ### 2. **View**:
-   *_ComicsNavigationView_*:
-   - The main view for browsing comics.
-   - Allows users to search for comics by number or text.
-   - Displays favorited comics.
+*_ComicsNavigationView_*:
+- The main view for browsing comics.
+- Allows users to search for comics by number or text.
+- Displays favorited comics.
+  
+*_ComicDetailView_*:
+- Displays comic details, including the image and description.
+  
+*_ComicCellView_*:
+- Displays some informations about the comic for the `ComicsNavigationView`.
    
-   *_ComicDetailView_*:
-   - Displays comic details, including the image and description.
-   
-   *_ComicCellView_*:
-   - Displays some informations about the comic for the `ComicsNavigationView`.
-
 ### 3. **ViewModel**:
-    *_ComicsNavigationViewModel_*:
-    - Manages the state of the comic list, including loading, searching, and favoriting.
-    - Loads the comics lists depending on the state of the screen.
+*_ComicsNavigationViewModel_*:
+- Manages the state of the comic list, including loading, searching, and favoriting.
+- Loads the comics lists depending on the state of the screen.
 
-    *_ComicDetailViewModel_* and *_ComicCellViewModel_*:
-    - Handles logic for displaying comic details and explanations.
+*_ComicDetailViewModel_* and *_ComicCellViewModel_*:
+- Handles logic for displaying comic details and explanations.
 
 ### 4. **Services**:
-    *_XKCDService_*:
-    - Fetches comics and explanations from the XKCD API.
+*_XKCDService_*:
+- Fetches comics and explanations from the XKCD API.
     
-    *_StorageService_*:
-    - Manages local storage for favorited comics using `UserDefaults`.
+*_StorageService_*:
+- Manages local storage for favorited comics using `UserDefaults`.
     
-    *_XKCDSearchService_*:
-    - Fetch a HTML wiki page and parse it using *SwiftSoap* to get the comics ids.
+*_XKCDSearchService_*:
+- Fetch a HTML wiki page and parse it using *SwiftSoap* to get the comics ids.
    
-### 4. **Utils**:
-    *_NotificationManager_*:
-    - Handles local notifications for new comics.
-    
+### 5. **Utils**:
+*_NotificationManager_*:
+- Handles local notifications for new comics.
+     
 Classes in `Servicies` and `Utils` are marked as final and implement the *Singleton pattern*. This ensures a single, shared instance is used throughout the app, improving efficiency and consistency.
 
 ## Technologies Used
@@ -98,6 +98,7 @@ Classes in `Servicies` and `Utils` are marked as final and implement the *Single
 
 ## Future Improvements
 
+- Improve app design
 - Add support for dark mode.
 - Implement push notifications for new comics using a backend service.
 - Add a "Random Comic" feature.
