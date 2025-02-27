@@ -38,7 +38,7 @@ final class XKCDSearchService {
         let document = try SwiftSoup.parse(htmlString)
         
         // extract the elements with a tag that contain the ids of result comics
-        let searchResults = try document.select("ul.mw-search-results li")        
+        let searchResults = try document.select("ul.mw-search-results li")
         var comicIds: [Int] = []
         var uniqueIds: Set<Int> = []
         

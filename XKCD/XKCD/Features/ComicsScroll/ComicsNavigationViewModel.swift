@@ -1,5 +1,5 @@
 //
-//  ComicsCarouselViewModel.swift
+//  ComicsNavigationViewModel.swift
 //  XKCD
 //
 //  Created by Maria Vidrasc on 22.02.2025.
@@ -9,7 +9,7 @@ import Foundation
 import UserNotifications
 
 // structure that stores the state of the screen
-enum ComicsScrollViewState {
+enum ComicsNavigationViewState {
     case idle
     case loading
     case loaded([Comic])
@@ -19,9 +19,9 @@ enum ComicsScrollViewState {
 }
 
 @MainActor
-class ComicsScrollViewModel: ObservableObject {
+class ComicsNavigationViewModel: ObservableObject {
     // Store the comics
-    @Published var state: ComicsScrollViewState = .idle
+    @Published var state: ComicsNavigationViewState = .idle
     @Published var searchResults: [Int] = []
     
     // Track the current ID that we use for adding new comics in the list
@@ -29,7 +29,7 @@ class ComicsScrollViewModel: ObservableObject {
     
     private var searchTask: Task<Void, Never>?
     
-    private func updateState(_ newState: ComicsScrollViewState) async {
+    private func updateState(_ newState: ComicsNavigationViewState) async {
         await MainActor.run {
             self.state = newState
         }

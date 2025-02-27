@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ComicsNavigationView: View {
-    @StateObject var viewModel = ComicsScrollViewModel()
+    @StateObject var viewModel = ComicsNavigationViewModel()
     @State private var searchText = ""
     
     var body: some View {
