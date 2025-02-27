@@ -10,7 +10,6 @@ import UserNotifications
 
 // structure that stores the state of the screen
 enum ComicsNavigationViewState {
-    case idle
     case loading
     case loaded([Comic])
     case searchResults([Comic])
@@ -21,7 +20,7 @@ enum ComicsNavigationViewState {
 @MainActor
 class ComicsNavigationViewModel: ObservableObject {
     // Store the comics
-    @Published var state: ComicsNavigationViewState = .idle
+    @Published var state: ComicsNavigationViewState = .loading
     @Published var searchResults: [Int] = []
     
     // Track the current ID that we use for adding new comics in the list

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ComicDetailViewModel: ObservableObject {
     var comic: Comic
@@ -27,5 +28,11 @@ class ComicDetailViewModel: ObservableObject {
     
     func getImage(comicId: Int) -> String {
         return StorageService.shared.contains(comicId: comic.id) ? "heart.fill" : "heart"
+    }
+    
+    func openBrowser() {
+        if let url = URL(string: "https://www.explainxkcd.com/wiki/index.php/\(comic.id)") {
+            UIApplication.shared.open(url)
+        }
     }
 }

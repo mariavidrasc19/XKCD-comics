@@ -16,12 +16,7 @@ struct ComicsNavigationView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
-                    // Search Bar
-                    TextField("Search comics", text: $searchText)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .padding(.horizontal)
-                    
-                    // Browse and Favorites Buttons
+                    // buttons for browsing and look up favorites
                     HStack(spacing: 16) {
                         Button(action: {
                             Task {
@@ -51,9 +46,10 @@ struct ComicsNavigationView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Content View
+                    // contains the comics
                     contentView
                 }
+                .searchable(text: $searchText, prompt: "Search comics")
                 .navigationBarTitle(Text("XKCD Comics"))
                 .onChange(of: searchText) {
                     if searchText.isEmpty {
@@ -80,11 +76,15 @@ extension ComicsNavigationView {
     @ViewBuilder
     var contentView: some View {
         switch viewModel.state {
-        case .idle:
-            EmptyView()
         case .loading:
-            ProgressView()
-                .padding()
+            VStack {
+                Image(uiImage: .xkcd)
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                ProgressView()
+                    .padding()
+            }
         case .loaded(let comics):
             comicsView(comics: comics)
         case .searchResults(let comics):
@@ -105,7 +105,8 @@ extension ComicsNavigationView {
                     comicCellView(comic: comics[index])
                         .onAppear() {
                             // Fetch more comics when the user reaches the end of the comics list
-                            if index == comics.count - 1 {
+                            if case .loaded = viewModel.state,
+                                index == comics.count - 1 {
                                 Task {
                                     try await viewModel.fetchNextComic()
                                 }

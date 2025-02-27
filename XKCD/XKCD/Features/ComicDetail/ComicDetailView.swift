@@ -23,6 +23,9 @@ struct ComicDetailView: View {
                     Text(String(viewModel.comic.id) + ". " + viewModel.comic.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                    Text("Published on \(viewModel.comic.month)/\(viewModel.comic.day)/\(viewModel.comic.year)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                     
                     if let image = viewModel.comic.image {
                         Image(uiImage: image)
@@ -36,10 +39,6 @@ struct ComicDetailView: View {
                             .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                             .foregroundColor(.gray)
                     }
-                    
-                    Text("Published on \(viewModel.comic.month)/\(viewModel.comic.day)/\(viewModel.comic.year)")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
                     
                     Text(viewModel.comic.alt)
                         .font(.body)
@@ -60,9 +59,7 @@ struct ComicDetailView: View {
                     }
                     
                     Button(action: {
-                        if let url = URL(string: "https://www.explainxkcd.com/wiki/index.php/\(viewModel.comic.id)") {
-                            UIApplication.shared.open(url)
-                        }
+                        viewModel.openBrowser()
                     }) {
                         Text("Get Explanation")
                             .font(.headline)
@@ -115,5 +112,21 @@ struct ComicDetailView: View {
                 }
             }
         }
+    }
+}
+
+class Preview: PreviewProvider {
+    static var previews: some View {
+        ComicDetailView(comic: .init(id: 3,
+                                   link: "",
+                                   day: "", 
+                                   month: "",
+                                   year: "2007",
+                                   news: "",
+                                   safeTitle: "Facebook",
+                                   transcript: "{{Title: Mildly sleazy uses of Facebook, part 14:}}\n{{subheading: Looking up someone's profile before introducing yourself so you know which of your favorite bands to mention}}\nBoy: Favorite bands? Hmm...\nBoy: Maybe Regina Spektor or the Polyphonic Spree.\nGirl: Whoa, those are two of my favorites, too!\nGirl: Clearly, we should have sex.\nBoy: Okay!  My favorite position is the retrograde wheelbarrow.\nGirl: [[arms in the air]] Ohmygod, mine too!\n{{alt-text: 'Here, I'll put my number in your cell pho -- wait, why is it already here?'}}",
+                                   alt: "'Here, I'll put my number in your cell pho -- wait, why is it already here?'",
+                                   title: "Facebook",
+                                   imageData: nil))
     }
 }
