@@ -63,8 +63,10 @@ struct ComicsNavigationView: View {
                     }
                 }
                 .onAppear {
-                    Task {
-                        try await viewModel.loadData()
+                    if case .loading = viewModel.state {
+                        Task {
+                            try await viewModel.loadData()
+                        }
                     }
                 }
             }
