@@ -28,4 +28,3 @@ class ComicCellViewModel: ObservableObject {
         isLiked.toggle()
     }
 }
-

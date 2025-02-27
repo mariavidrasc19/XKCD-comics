@@ -26,6 +26,6 @@ class ComicDetailViewModel: ObservableObject {
     }
     
     func getImage(comicId: Int) -> String {
-        self.isLiked ? "heart.fill" : "heart"
+        return StorageService.shared.contains(comicId: comic.id) ? "heart.fill" : "heart"
     }
 }
